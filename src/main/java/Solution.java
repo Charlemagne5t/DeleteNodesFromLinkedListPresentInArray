@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solution {
+class Solution {
     public ListNode modifiedList(int[] nums, ListNode head) {
         Set<Integer> set = new HashSet<>();
 
@@ -9,24 +9,22 @@ public class Solution {
             set.add(x);
         }
 
-        ListNode tail = new ListNode();
-        ListNode res = null;
-
-
+        ListNode firstValid = null;
+        ListNode lastValid = null;
         while(head != null) {
             if(!set.contains(head.val)) {
-                if(res == null) {
-                    res = head;
-                    tail = head;
-                } else {
-                    tail.next = head;
-                    tail = tail.next;
+                if(firstValid == null) {
+                    firstValid = head;
+                    lastValid = head;
+                }else {
+                    lastValid.next = head;
+                    lastValid = head;
                 }
             }
             head = head.next;
         }
-        tail.next = null;
+        lastValid.next = null;
 
-        return res;
+        return firstValid;
     }
 }
