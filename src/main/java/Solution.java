@@ -4,27 +4,27 @@ import java.util.Set;
 class Solution {
     public ListNode modifiedList(int[] nums, ListNode head) {
         Set<Integer> set = new HashSet<>();
-
         for(int x : nums) {
             set.add(x);
         }
+        ListNode cur = head;
+        ListNode prev = null;
 
-        ListNode firstValid = null;
-        ListNode lastValid = null;
-        while(head != null) {
-            if(!set.contains(head.val)) {
-                if(firstValid == null) {
-                    firstValid = head;
-                    lastValid = head;
+        while(cur != null) {
+            if(set.contains(cur.val)) {
+                if(prev != null) {
+                    prev.next = cur.next;
                 }else {
-                    lastValid.next = head;
-                    lastValid = head;
+                    head = cur.next;
                 }
+                cur = cur.next;
+            }else {
+                prev = cur;
+                cur = cur.next;
             }
-            head = head.next;
-        }
-        lastValid.next = null;
 
-        return firstValid;
+        }
+
+        return head;
     }
 }
